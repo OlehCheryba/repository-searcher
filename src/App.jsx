@@ -1,7 +1,19 @@
 import React from 'react';
+import InputSection from './components/InputSection/InputSection';
+import RepositoriesSection from './components/RepositoriesSection/RepositoriesSection';
 
-const ooo = (props) => {
-
+const App = ({ inputValue, setInputValue }) => {
+  return (
+    <>
+      <InputSection 
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+      />
+      <RepositoriesSection
+        inputValue={inputValue}
+      />
+    </>
+  )
 }
 
-export default ooo
+export default App

@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import App from './App';
 
-const ooo = (props) => {
+const AppContainer = () => {
+  const [ inputValue, setInputValue ] = useState('');
 
+  return (
+    <App 
+      inputValue={inputValue}
+      setInputValue={setInputValue}
+    />
+  )
 }
 
-export default ooo
+export default AppContainer
