@@ -1,33 +1,34 @@
 import React from 'react';
-import RepositoryTable from '../../common/RepositoryTable';
+import RepositoryTable from '../../common/RepositoryTable/RepositoryTable';
 
-const SelectedRepositories = ({ repositories, deleteFromSelected }) => {
-  if (!repositories.length) {
+const SelectedRepositories = ({ repositories, deleteRepositoryFromSelected }) => {
+  if (!repositories || !repositories.length) {
     return (
-      <p>
+      <h2>
         You don't have selected repositories.
-      </p>
+      </h2>
     )
   }
 
+  const controls = (repository) => (
+    <button
+      onClick={async (e) => {
+        e.persist();
+        deleteRepositoryFromSelected(repository.id);
+      }}
+    >
+      delete from selected
+    </button>
+  )
+
   return (
     <>
-      <h3>
+      <h2>
         Your's selected repositories:
-      </h3>
+      </h2>
       <RepositoryTable 
         repositories={repositories}
-        controlButton={(repository) => (
-          <button
-            onClick={async (e) => {
-              e.persist();
-              await deleteFromSelected(repository);
-              e.target.innerText = 'delete succesfully';
-            }}
-          >
-            delete from selected
-          </button>
-        )}
+        controls={controls}
       />
     </>
   )

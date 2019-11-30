@@ -1,17 +1,12 @@
 import React from 'react';
 import InputSection from './components/InputSection/InputSection';
-import RepositoriesSection from './components/RepositoriesSection/RepositoriesSection';
+import RepositoriesSectionContainer from './components/RepositoriesSection/RepositoriesSectionContainer';
 
-const App = ({ inputValue, setInputValue }) => {
+const App = () => {
   return (
     <>
-      <InputSection 
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-      />
-      <RepositoriesSection
-        inputValue={inputValue}
-      />
+      <InputSection />
+      <RepositoriesSectionContainer />
     </>
   )
 }

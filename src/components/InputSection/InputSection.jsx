@@ -1,21 +1,14 @@
 import React from 'react';
+import InputFormContainer from './InputForm/InputFormContainer';
+import styles from './InputSection.module.css';
 
-const InputSection = ({ inputValue, setInputValue }) => {
-  const handleChange = event => {
-    setInputValue(event.target.value);
-  }
-
+const InputSection = () => {
   return (
-    <section>
-      <b>
-        For search, enter name of a repository: 
-      </b>
-      <input 
-        value={inputValue}
-        onChange={handleChange}
-        placeholder='Name of a repository'
-      />
-      <hr />
+    <section className={styles.section}>
+      <span className={styles.infoText}>
+        For search, type name of a repository and click Enter: 
+      </span>
+      <InputFormContainer />
     </section>
   )
 }

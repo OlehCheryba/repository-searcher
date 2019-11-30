@@ -1,33 +1,46 @@
 import React from 'react';
-import RepositoryTable from '../../common/RepositoryTable';
+import RepositoryTable from '../../common/RepositoryTable/RepositoryTable';
+import Preloader from '../../common/Preloader/Preloader';
 
-const SearchedRepositories = ({ repositories, addToSelected }) => {
+const SearchedRepositories = ({ repositories, selectRepository, isFetching }) => {
+  if (isFetching) {
+    return <Preloader />
+  }
+
   if (!repositories || !repositories.length) {
     return (
-      <p>
+      <h2>
         No repositories are found with this name.
-      </p>
+      </h2>
     )
+  }
+
+  const controls = (repository) => {
+    if (repository.isSelected) {
+      return 'Already in selected list'
+    }
+
+    return (
+      <button
+        onClick={async (e) => {
+          e.persist();
+          selectRepository(repository);
+        }}
+      >
+        add to selected
+      </button>
+    )
+
   }
 
   return (
     <>
-      <h3>
+      <h2>
         Results of search:
-      </h3>
+      </h2>
       <RepositoryTable 
         repositories={repositories}
-        controlButton={(repository) => (
-          <button
-            onClick={async (e) => {
-              e.persist();
-              await addToSelected(repository);
-              e.target.innerText = 'added succesfully';
-            }}
-          >
-            add to selected
-          </button>
-        )}
+        controls={controls}
       />
     </>
   )

@@ -1,23 +1,24 @@
 import React from 'react';
 import RepositoryRow from './RepositoryRow';
+import styles from './RepositoryTable.module.css';
 
-const RepositoryTable = ({ repositories, controlButton }) => {
+const RepositoryTable = ({ repositories, controls }) => {
   return (
-    <table>
-      <thead>
+    <table className={styles.table}>
+      <thead className={styles.thead}>
         <tr>
           <th>Name of repository</th>
           <th>Owner's login</th>
           <th>Score</th>
-          <th>Action</th>
+          <th>Controls</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className={styles.tbody}>
         {repositories.map(repository => (
           <RepositoryRow 
             repository={repository}
             key={repository.id}
-            controlButton={controlButton}
+            controls={controls}
           />
         ))}
       </tbody>

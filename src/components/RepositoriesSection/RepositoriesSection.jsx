@@ -1,20 +1,15 @@
 import React from 'react';
 import SearchedRepositoriesContainer from './SearchedRepositories/SearchedRepositoriesContainer';
 import SelectedRepositoriesContainer from './SelectedRepositories/SelectedRepositoriesContainer';
+import styles from './RepositoriesSection.module.css';
 
-const RepositoriesSection = ({ inputValue }) => {
-  const searchMode = inputValue !== '';
-
-  if (searchMode) {
-    return (
-      <SearchedRepositoriesContainer 
-        inputValue={inputValue}
-      />
-    )
-  }
-
+const RepositoriesSection = ({ isModeSearch }) => {
   return (
-    <SelectedRepositoriesContainer />
+    <section className={styles.section}>
+      {isModeSearch ? 
+        <SearchedRepositoriesContainer /> : <SelectedRepositoriesContainer />
+      }
+    </section>
   )
 }
 

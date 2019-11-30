@@ -1,26 +1,21 @@
 import React from 'react';
 import SelectedRepositories from './SelectedRepositories';
+import { connect } from 'react-redux';
+import { deleteRepositoryFromSelected } from './../../../redux/reducers/repositories-reducer';
 
-const SelectedRepositoriesContainer = () => {
-  const repositories = JSON.parse(
-    localStorage.getItem('repositories') || '[]'
-  );
-
-  const deleteFromSelected = async (repositoryToDelete) => {
-    let repositories = JSON.parse(
-      localStorage.getItem('repositories') || '[]'
-    );
-    
-    repositories = repositories.filter(({ id }) => id !== repositoryToDelete.id);
-    localStorage.setItem('repositories', JSON.stringify(repositories));
-  }
-
+const SelectedRepositoriesContainer = (props) => {
   return (
     <SelectedRepositories
-      repositories={repositories}
-      deleteFromSelected={deleteFromSelected}
+      {...props}
     />
   )
 }
 
-export default SelectedRepositoriesContainer
+const mapStateToProps = (state) => ({
+  repositories: state.repositories.selectedRepositories
+});
+
+export default connect(
+  mapStateToProps,
+  { deleteRepositoryFromSelected }
+)(SelectedRepositoriesContainer);

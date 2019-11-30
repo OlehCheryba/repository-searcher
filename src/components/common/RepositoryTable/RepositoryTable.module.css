@@ -1,0 +1,16 @@
+.table {
+  border-spacing: 0 2px;
+  border-radius: 10px;
+}
+
+.table th, .table td {
+  padding: 7px 12px
+}
+
+.thead {
+  background-color: #53c0ff;
+}
+
+.tbody {
+  background-color: #94d8ff;
+}

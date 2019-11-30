@@ -1,43 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import SearchedRepositories from './SearchedRepositories';
-import Preloader from '../../common/Preloader';
+import { connect } from 'react-redux';
+import { selectRepository } from '../../../redux/reducers/repositories-reducer';
 
-const SearchedRepositoriesContainer = ({ inputValue }) => {
-  const [ repositories, setRepositories ] = useState([]);
-  const [ isFetching, setIsFecthing ] = useState(false);
-
-  const getRepositories = async () => {
-    setIsFecthing(true);
-    const response = await fetch(`https://api.github.com/search/repositories?q=${inputValue}`);
-    const result = await response.json();
-    setIsFecthing(false);
-    setRepositories(result.items);
-  }
-
-  const addToSelected = async (repositoryToAdd) => {
-    let repositories = JSON.parse(
-      localStorage.getItem('repositories') || '[]'
+const fillIsSelected = (searchedRepositories, selectedRepositories) => {
+  return searchedRepositories.map((repository) => {
+    repository.isSelected = Boolean(
+      selectedRepositories.find(
+        (seletedRepository) => seletedRepository.id === repository.id
+      )
     );
-    
-    repositories = repositories.filter(({ id }) => id !== repositoryToAdd.id);
-    repositories.push(repositoryToAdd);
-    localStorage.setItem('repositories', JSON.stringify(repositories));
-  }
 
-  useEffect(() => {
-    getRepositories();
-  }, [ inputValue ])
+    return repository;
+  });
+}
 
-  if (isFetching) {
-    return <Preloader />
-  }
+const SearchedRepositoriesContainer = ({ 
+  selectedRepositories, searchedRepositories, ...props 
+}) => {
+  const repositories = fillIsSelected(searchedRepositories, selectedRepositories);
 
   return (
     <SearchedRepositories 
       repositories={repositories}
-      addToSelected={addToSelected}
+      {...props}
     />
   )
 }
 
-export default SearchedRepositoriesContainer
+const mapStateToProps = (state) => ({
+  selectedRepositories: state.repositories.selectedRepositories,
+  searchedRepositories: state.repositories.searchedRepositories,
+  isFetching: state.repositories.isFetching
+});
+
+export default connect(
+  mapStateToProps,
+  { selectRepository }
+)(SearchedRepositoriesContainer);
